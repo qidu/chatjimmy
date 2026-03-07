@@ -1,0 +1,61 @@
+{
+  "name": "chatjimmy-sdk",
+  "version": "0.1.0",
+  "description": "ChatJimmy SDK - AI chat API compatibility layer for OpenAI, Anthropic, and Google Gemini",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "lint": "eslint src/**/*.ts",
+    "format": "prettier --write src/**/*.ts",
+    "prepublishOnly": "npm run build",
+    "examples": "ts-node examples/openai-compatible.ts"
+  },
+  "keywords": [
+    "chatjimmy",
+    "ai",
+    "chat",
+    "api",
+    "openai",
+    "anthropic",
+    "gemini",
+    "sdk",
+    "typescript"
+  ],
+  "author": "ChatJimmy Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chatjimmy/chatjimmy-sdk.git"
+  },
+  "bugs": {
+    "url": "https://github.com/chatjimmy/chatjimmy-sdk/issues"
+  },
+  "homepage": "https://github.com/chatjimmy/chatjimmy-sdk#readme",
+  "devDependencies": {
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.11.24",
+    "@typescript-eslint/eslint-plugin": "^7.1.0",
+    "@typescript-eslint/parser": "^7.1.0",
+    "eslint": "^8.57.0",
+    "jest": "^29.7.0",
+    "prettier": "^3.2.5",
+    "ts-jest": "^29.1.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "axios": "^1.6.7"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
