@@ -73,9 +73,14 @@ async function main() {
         ]
       });
     } catch (error) {
-      console.log('Error caught:', error.message);
-      console.log('Error code:', error.code);
-      console.log('Error status:', error.status);
+      if (error instanceof Error) {
+        console.log('Error caught:', error.message);
+        const anyError = error as any;
+        console.log('Error code:', anyError.code);
+        console.log('Error status:', anyError.status);
+      } else {
+        console.log('Unknown error:', error);
+      }
     }
 
     // Example 5: Using the native ChatJimmy client directly

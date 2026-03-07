@@ -8,6 +8,10 @@ import { ChatJimmyStats, StatsData, ParsedStats } from '../core/types';
  * Parse stats from ChatJimmy response text
  */
 export function parseStats(responseText: string): ParsedStats {
+  if (!responseText) {
+    throw new Error('No response text provided');
+  }
+
   const statsRegex = new RegExp('<\\|stats\\|>(.*?)<\\|/stats\\|>', 's');
   const match = responseText.match(statsRegex);
 
@@ -33,7 +37,7 @@ export function parseStats(responseText: string): ParsedStats {
  */
 export function extractContent(responseText: string): string {
   const statsRegex = new RegExp('<\\|stats\\|>.*?<\\|/stats\\|>', 's');
-  return responseText.replace(statsRegex, '').trim();
+  return responseText ? responseText.replace(statsRegex, '').trim() : '';
 }
 
 /**

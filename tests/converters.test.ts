@@ -223,6 +223,15 @@ describe('Stats Parsing', () => {
     expect(content).not.toContain('<|/stats|>');
   });
 
+  test('extractContent handles undefined/null input', () => {
+    const content1 = extractContent('');
+    expect(content1).toBe('');
+
+    // This should handle undefined without throwing
+    const content2 = extractContent(undefined as any);
+    expect(content2).toBe('');
+  });
+
   test('extractStats extracts stats object', () => {
     const stats = extractStats(sampleResponse);
     expect(stats).not.toBeNull();

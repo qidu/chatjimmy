@@ -426,7 +426,7 @@ export function extractContent(responseText: string): string {
     return parsed.content;
   } catch {
     // If no stats tags, return original text
-    return responseText.trim();
+    return responseText ? responseText.trim() : '';
   }
 }
 

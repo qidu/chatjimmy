@@ -1,21 +1,31 @@
 /**
  * Example: Anthropic-compatible client usage
+ *
+ * This example shows how to use the Anthropic-compatible client interface.
+ * For testing without an API key, you can use curl commands as shown in docs/chatjimmy-examples.md:
+ * curl -s -X POST https://chatjimmy.ai/api/chat -d '{"messages": [{"role": "user", "content": "Hello!"}], "chatOptions": {"selectedModel": "llama3.1-8B", "systemPrompt": "", "topK": 8}, "attachment": null}'
+ *
+ * Note: Anthropic model names are mapped to llama3.1-8B internally.
  */
 
 import { AnthropicCompatibleClient } from '../src';
 
 async function main() {
-  // Initialize client with your API key
+  // Initialize client with dummy API key for testing
+  // Note: For production use, get a real API key from chatjimmy.ai
+  // This dummy key passes client validation but won't authenticate with the server
+  // For testing without the SDK, use curl commands as shown in docs/chatjimmy-examples.md
   const client = new AnthropicCompatibleClient({
-    apiKey: 'your-api-key-here',
+    apiKey: 'dummy-test-key-1234567890', // Dummy key for testing (20+ chars)
     baseURL: 'https://chatjimmy.ai/api'
   });
 
   try {
     // Example 1: Simple message creation
+    // Note: 'claude-sonnet-4-5-20250929' is mapped to 'llama3.1-8B' internally
     console.log('=== Example 1: Simple Message Creation ===');
     const response = await client.messages.create({
-      model: 'claude-sonnet-4-5-20250929',
+      model: 'llama3.1-8B', // Mapped to llama3.1-8B
       max_tokens: 1024,
       system: 'You are a helpful assistant.',
       messages: [
@@ -81,7 +91,7 @@ async function main() {
     console.log('\n=== Example 4: With Thinking Budget ===');
     const response3 = await client.messages.create({
       model: 'claude-opus-4-5-20251101',
-      max_tokens: 500,
+      max_tokens: 2048, // Must be greater than thinking budget (1024)
       thinking: {
         type: 'enabled',
         budget_tokens: 1024
@@ -104,9 +114,14 @@ async function main() {
         ]
       });
     } catch (error) {
-      console.log('Error caught:', error.message);
-      console.log('Error code:', error.code);
-      console.log('Error status:', error.status);
+      if (error instanceof Error) {
+        console.log('Error caught:', error.message);
+        const anyError = error as any;
+        console.log('Error code:', anyError.code);
+        console.log('Error status:', anyError.status);
+      } else {
+        console.log('Unknown error:', error);
+      }
     }
 
     // Example 6: Using system prompt

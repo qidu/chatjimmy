@@ -120,6 +120,32 @@ export class BaseClient {
    * Parse ChatJimmy response text
    */
   protected parseResponseText(responseText: string): ChatJimmyResponse {
+    // Handle undefined or null responseText
+    if (!responseText) {
+      return {
+        content: '',
+        stats: {
+          created_at: Date.now() / 1000,
+          done: true,
+          done_reason: 'stop',
+          total_duration: 0,
+          logprobs: null,
+          topk: 8,
+          ttft: 0,
+          reason: 'stop',
+          status: 200,
+          prefill_tokens: 0,
+          prefill_rate: 0,
+          decode_tokens: 0,
+          decode_rate: 0,
+          total_tokens: 0,
+          total_time: 0,
+          roundtrip_time: 0
+        },
+        rawResponse: ''
+      };
+    }
+
     try {
       const parsed = parseStatsFromResponse(responseText);
       return {
