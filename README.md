@@ -186,6 +186,10 @@ npm test
 # Run examples
 npm run examples
 
+npx ts-node examples/openai-compatible.ts
+
+npx ts-node examples/anthropic-compatible.ts
+
 # Lint code
 npm run lint
 

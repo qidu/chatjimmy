@@ -106,13 +106,14 @@ async function main() {
     // Example 5: Error handling
     console.log('\n=== Example 5: Error Handling ===');
     try {
-      await client.messages.create({
-        model: 'unsupported-model', // This model is not in the mapping
+      const response5 = await client.messages.create({
+        model: 'gpt-5', // This model is not in the mapping
         max_tokens: 100,
         messages: [
           { role: 'user', content: 'This will fail' }
         ]
       });
+      console.log(response5);
     } catch (error) {
       if (error instanceof Error) {
         console.log('Error caught:', error.message);

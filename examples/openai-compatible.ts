@@ -15,9 +15,8 @@ async function main() {
     // Example 1: Simple chat completion
     console.log('=== Example 1: Simple Chat Completion ===');
     const response = await client.chat.completions.create({
-      model: 'gpt-4o',
+      model: 'llama3.1-8B',
       messages: [
-        { role: 'system', content: 'You are a helpful assistant.' },
         { role: 'user', content: 'Explain quantum computing in simple terms.' }
       ],
       temperature: 0.7,
@@ -32,7 +31,7 @@ async function main() {
     // Example 2: Streaming response
     console.log('\n=== Example 2: Streaming Response ===');
     const stream = await client.chat.completions.createStream({
-      model: 'gpt-4o',
+      model: 'llama3.1-8B',
       messages: [
         { role: 'user', content: 'Count from 1 to 5' }
       ],
@@ -50,8 +49,8 @@ async function main() {
 
     // Example 3: With custom parameters
     console.log('=== Example 3: Custom Parameters ===');
-    const response2 = await client.chat.completions.create({
-      model: 'gpt-3.5-turbo',
+    const response2 = await client.chat.completions.create({ 
+      model: 'llama3.1-8B',
       messages: [
         { role: 'user', content: 'Write a haiku about programming' }
       ],
@@ -66,12 +65,13 @@ async function main() {
     // Example 4: Error handling
     console.log('\n=== Example 4: Error Handling ===');
     try {
-      await client.chat.completions.create({
-        model: 'unsupported-model', // This model is not in the mapping
+      const response4= await client.chat.completions.create({
+        model: 'gpt-5', // This model is not in the mapping
         messages: [
           { role: 'user', content: 'This will fail' }
         ]
       });
+      console.log(response4);
     } catch (error) {
       if (error instanceof Error) {
         console.log('Error caught:', error.message);

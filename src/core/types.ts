@@ -324,7 +324,7 @@ export interface GeminiStreamChunk {
 // ==================== Common Types ====================
 
 export interface ProviderConfig {
-  apiKey: string;
+  apiKey?: string;
   baseURL?: string;
   timeout?: number;
   maxRetries?: number;

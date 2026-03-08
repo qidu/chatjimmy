@@ -43,16 +43,12 @@ export class BaseClient {
       ...config
     };
 
-    if (!this.config.apiKey) {
-      throw new ChatJimmyError('API key is required');
-    }
-
     this.axiosInstance = axios.create({
       baseURL: this.config.baseURL,
       timeout: this.config.timeout,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.config.apiKey}`,
+        ...(this.config.apiKey && { 'Authorization': `Bearer ${this.config.apiKey}` }),
         ...this.config.headers
       }
     });
@@ -195,13 +191,13 @@ export class ChatJimmyClient extends BaseClient {
     this.validateChatJimmyRequest(request);
 
     try {
-      const response = await this.makeRequest<{ content: string }>({
+      const response = await this.makeRequest<string>({
         method: 'POST',
         url: '/chat',
         data: request
       });
 
-      return this.parseResponseText(response.data.content);
+      return this.parseResponseText(response.data);
     } catch (error) {
       if (error instanceof ChatJimmyError) {
         throw error;
@@ -402,7 +398,9 @@ export class OpenAICompatibleClient extends BaseClient {
    * Helper method to use native ChatJimmy client
    */
   private async _chat(request: ChatJimmyRequest): Promise<ChatJimmyResponse> {
-    const client = new ChatJimmyClient(this.config);
+    // Create ChatJimmyClient without API key since the API doesn't require it
+    const client = new ChatJimmyClient({ ...this.config, apiKey: undefined });
+    // Alternatively, we could pass an empty config: const client = new ChatJimmyClient({});
     return client.chat(request);
   }
 
@@ -410,7 +408,8 @@ export class OpenAICompatibleClient extends BaseClient {
    * Helper method to stream from ChatJimmy
    */
   private async *_chatStream(request: ChatJimmyRequest): AsyncIterable<ChatJimmyStreamChunk> {
-    const client = new ChatJimmyClient(this.config);
+    // Create ChatJimmyClient without API key since the API doesn't require it
+    const client = new ChatJimmyClient({ ...this.config, apiKey: undefined });
     yield* client.chatStream(request);
   }
 }
@@ -499,7 +498,9 @@ export class AnthropicCompatibleClient extends BaseClient {
    * Helper method to use native ChatJimmy client
    */
   private async _chat(request: ChatJimmyRequest): Promise<ChatJimmyResponse> {
-    const client = new ChatJimmyClient(this.config);
+    // Create ChatJimmyClient without API key since the API doesn't require it
+    const client = new ChatJimmyClient({ ...this.config, apiKey: undefined });
+    // Alternatively, we could pass an empty config: const client = new ChatJimmyClient({});
     return client.chat(request);
   }
 
@@ -507,7 +508,8 @@ export class AnthropicCompatibleClient extends BaseClient {
    * Helper method to stream from ChatJimmy
    */
   private async *_chatStream(request: ChatJimmyRequest): AsyncIterable<ChatJimmyStreamChunk> {
-    const client = new ChatJimmyClient(this.config);
+    // Create ChatJimmyClient without API key since the API doesn't require it
+    const client = new ChatJimmyClient({ ...this.config, apiKey: undefined });
     yield* client.chatStream(request);
   }
 }
@@ -592,7 +594,9 @@ export class GoogleCompatibleClient extends BaseClient {
    * Helper method to use native ChatJimmy client
    */
   private async _chat(request: ChatJimmyRequest): Promise<ChatJimmyResponse> {
-    const client = new ChatJimmyClient(this.config);
+    // Create ChatJimmyClient without API key since the API doesn't require it
+    const client = new ChatJimmyClient({ ...this.config, apiKey: undefined });
+    // Alternatively, we could pass an empty config: const client = new ChatJimmyClient({});
     return client.chat(request);
   }
 
@@ -600,7 +604,8 @@ export class GoogleCompatibleClient extends BaseClient {
    * Helper method to stream from ChatJimmy
    */
   private async *_chatStream(request: ChatJimmyRequest): AsyncIterable<ChatJimmyStreamChunk> {
-    const client = new ChatJimmyClient(this.config);
+    // Create ChatJimmyClient without API key since the API doesn't require it
+    const client = new ChatJimmyClient({ ...this.config, apiKey: undefined });
     yield* client.chatStream(request);
   }
 }
