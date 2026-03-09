@@ -2,6 +2,7 @@
   "name": "chatjimmy-sdk",
   "version": "0.1.0",
   "description": "ChatJimmy SDK - AI chat API compatibility layer for OpenAI, Anthropic, and Google Gemini",
+  "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {

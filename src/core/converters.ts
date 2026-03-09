@@ -24,7 +24,7 @@ import {
   ParameterMapping,
   StatsData,
   ParsedStats
-} from './types';
+} from './types.js';
 
 // ==================== Model Mappings ====================
 

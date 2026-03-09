@@ -3,19 +3,19 @@
  */
 
 // Core types and client
-export * from './core/types';
-export * from './core/client';
+export * from './core/types.js';
+export * from './core/client.js';
 
 // Providers
-export * from './providers';
+export * from './providers/index.js';
 
 // Utilities
-export * from './utils/parsing';
-export * from './utils/errors';
-export * from './utils/validation';
+export * from './utils/parsing.js';
+export * from './utils/errors.js';
+export * from './utils/validation.js';
 
 // Converters
-export * from './core/converters';
+export * from './core/converters.js';
 
 // Re-export commonly used types for convenience
 export {
@@ -23,13 +23,13 @@ export {
   OpenAICompatibleClient,
   AnthropicCompatibleClient,
   GoogleCompatibleClient
-} from './core/client';
+} from './core/client.js';
 
 export {
   OpenAIAdapter,
   AnthropicAdapter,
   GoogleAdapter
-} from './providers';
+} from './providers/index.js';
 
 export {
   parseStats,
@@ -39,14 +39,14 @@ export {
   statsToOpenAIUsage,
   statsToAnthropicUsage,
   statsToGoogleUsage
-} from './utils/parsing';
+} from './utils/parsing.js';
 
 export {
   createErrorFromResponse,
   createErrorFromException,
   isRetryableError,
   getRetryDelay
-} from './utils/errors';
+} from './utils/errors.js';
 
 export {
   validateChatJimmyRequest,
@@ -54,4 +54,4 @@ export {
   validateAnthropicRequest,
   validateGoogleRequest,
   validateApiKey
-} from './utils/validation';
+} from './utils/validation.js';

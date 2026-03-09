@@ -15,17 +15,17 @@ import {
   AnthropicResponse,
   GeminiRequest,
   GeminiResponse
-} from './types';
+} from './types.js';
 import {
   OpenAIAdapter,
   AnthropicAdapter,
   GoogleAdapter
-} from '../providers';
+} from '../providers/index.js';
 import {
   parseStatsFromResponse,
   extractContent,
   extractStats
-} from './converters';
+} from './converters.js';
 
 /**
  * Base HTTP client with common functionality

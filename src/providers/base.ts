@@ -10,14 +10,14 @@ import {
   ModelMapping,
   ParameterMapping,
   ChatJimmyError
-} from '../core/types';
+} from '../core/types.js';
 import {
   normalizeParameter,
   denormalizeParameter,
   extractStats,
   extractContent,
   parseStatsFromResponse
-} from '../core/converters';
+} from '../core/converters.js';
 
 /**
  * Base adapter class implementing common functionality

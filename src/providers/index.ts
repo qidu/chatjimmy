@@ -2,7 +2,7 @@
  * Providers exports
  */
 
-export { BaseAdapter, createAdapter } from './base';
-export { OpenAIAdapter } from './openai';
-export { AnthropicAdapter } from './anthropic';
-export { GoogleAdapter } from './google';
+export { BaseAdapter, createAdapter } from './base.js';
+export { OpenAIAdapter } from './openai.js';
+export { AnthropicAdapter } from './anthropic.js';
+export { GoogleAdapter } from './google.js';

@@ -2,7 +2,7 @@
  * Stats parsing utilities for ChatJimmy responses
  */
 
-import { ChatJimmyStats, StatsData, ParsedStats } from '../core/types';
+import { ChatJimmyStats, StatsData, ParsedStats } from '../core/types.js';
 
 /**
  * Parse stats from ChatJimmy response text

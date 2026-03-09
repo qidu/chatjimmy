@@ -2,7 +2,7 @@
  * Error types and utilities for ChatJimmy SDK
  */
 
-import { ChatJimmyError, OpenAIError, AnthropicError, GeminiError } from '../core/types';
+import { ChatJimmyError, OpenAIError, AnthropicError, GeminiError } from '../core/types.js';
 
 /**
  * Create error from HTTP response

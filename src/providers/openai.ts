@@ -2,7 +2,7 @@
  * OpenAI adapter implementation
  */
 
-import { BaseAdapter } from './base';
+import { BaseAdapter } from './base.js';
 import {
   ChatJimmyRequest,
   ChatJimmyResponse,
@@ -12,14 +12,14 @@ import {
   OpenAIError,
   ModelMapping,
   ParameterMapping
-} from '../core/types';
+} from '../core/types.js';
 import {
   convertOpenAIToChatJimmy,
   convertChatJimmyToOpenAI,
   convertChatJimmyToOpenAIStreamChunk,
   OPENAI_MODEL_MAPPING,
   OPENAI_PARAMETER_MAPPING
-} from '../core/converters';
+} from '../core/converters.js';
 
 export class OpenAIAdapter extends BaseAdapter {
   constructor() {

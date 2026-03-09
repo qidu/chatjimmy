@@ -2,7 +2,7 @@
  * Google Gemini adapter implementation
  */
 
-import { BaseAdapter } from './base';
+import { BaseAdapter } from './base.js';
 import {
   ChatJimmyRequest,
   ChatJimmyResponse,
@@ -14,13 +14,13 @@ import {
   GeminiError,
   ModelMapping,
   ParameterMapping
-} from '../core/types';
+} from '../core/types.js';
 import {
   convertGoogleToChatJimmy,
   convertChatJimmyToGoogle,
   GEMINI_MODEL_MAPPING,
   GEMINI_PARAMETER_MAPPING
-} from '../core/converters';
+} from '../core/converters.js';
 
 export class GoogleAdapter extends BaseAdapter {
   constructor() {

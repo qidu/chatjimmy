@@ -2,7 +2,7 @@
  * Anthropic adapter implementation
  */
 
-import { BaseAdapter } from './base';
+import { BaseAdapter } from './base.js';
 import {
   ChatJimmyRequest,
   ChatJimmyResponse,
@@ -13,14 +13,14 @@ import {
   AnthropicError,
   ModelMapping,
   ParameterMapping
-} from '../core/types';
+} from '../core/types.js';
 import {
   convertAnthropicToChatJimmy,
   convertChatJimmyToAnthropic,
   convertChatJimmyToAnthropicStreamChunk,
   ANTHROPIC_MODEL_MAPPING,
   ANTHROPIC_PARAMETER_MAPPING
-} from '../core/converters';
+} from '../core/converters.js';
 
 export class AnthropicAdapter extends BaseAdapter {
   constructor() {

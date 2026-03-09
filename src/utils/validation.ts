@@ -9,8 +9,8 @@ import {
   OpenAIRequest,
   AnthropicRequest,
   GeminiRequest
-} from '../core/types';
-import { createValidationError, createParameterError } from './errors';
+} from '../core/types.js';
+import { createValidationError, createParameterError } from './errors.js';
 
 /**
  * Validate ChatJimmy request
