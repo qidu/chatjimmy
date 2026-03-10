@@ -132,6 +132,81 @@ const client = new OpenAICompatibleClient({
 
 ## Advanced Usage
 
+### Tool Calling
+
+Both OpenAI and Anthropic compatible clients support tool/function calling:
+
+```typescript
+// OpenAI-style tool calling
+import { OpenAICompatibleClient } from 'chatjimmy-sdk';
+
+const client = new OpenAICompatibleClient({
+  apiKey: process.env.CHATJIMI_API_KEY!
+});
+
+const response = await client.chat.completions.create({
+  model: 'gpt-4o',
+  messages: [{ role: 'user', content: 'What is the weather in Boston?' }],
+  tools: [{
+    type: 'function',
+    function: {
+      name: 'get_weather',
+      description: 'Get the current weather in a given location',
+      parameters: {
+        type: 'object',
+        properties: {
+          location: {
+            type: 'string',
+            description: 'The city and state, e.g. San Francisco, CA'
+          },
+          unit: {
+            type: 'string',
+            enum: ['celsius', 'fahrenheit']
+          }
+        },
+        required: ['location']
+      }
+    }
+  }],
+  tool_choice: 'auto'
+});
+
+console.log(response.choices[0].message.tool_calls);
+
+// Anthropic-style tool calling
+import { AnthropicCompatibleClient } from 'chatjimmy-sdk';
+
+const client = new AnthropicCompatibleClient({
+  apiKey: process.env.CHATJIMI_API_KEY!
+});
+
+const response = await client.messages.create({
+  model: 'claude-sonnet-4-5-20250929',
+  max_tokens: 500,
+  tools: [{
+    name: 'get_weather',
+    description: 'Get the current weather in a given location',
+    input_schema: {
+      type: 'object',
+      properties: {
+        location: {
+          type: 'string',
+          description: 'The city and state, e.g. San Francisco, CA'
+        },
+        unit: {
+          type: 'string',
+          enum: ['celsius', 'fahrenheit']
+        }
+      },
+      required: ['location']
+    }
+  }],
+  messages: [{ role: 'user', content: 'What is the weather in Boston?' }]
+});
+
+console.log(response.content);
+```
+
 ### Streaming Responses
 
 ```typescript

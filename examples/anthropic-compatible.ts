@@ -8,7 +8,7 @@
  * Note: Anthropic model names are mapped to llama3.1-8B internally.
  */
 
-import { AnthropicCompatibleClient } from '../src';
+import { AnthropicCompatibleClient } from '../dist/index.js';
 
 async function main() {
   // Initialize client with dummy API key for testing
@@ -152,6 +152,40 @@ async function main() {
     console.log('Response with stop sequence:', response5.content[0].text);
     console.log('Stop sequence triggered:', response5.stop_sequence);
 
+    // Example 8: Tool calling
+    console.log('\n=== Example 8: Tool Calling ===');
+    const response6 = await client.messages.create({
+      model: 'claude-sonnet-4-5-20250929',
+      max_tokens: 500,
+      tools: [
+        {
+          name: 'get_weather',
+          description: 'Get the current weather in a given location',
+          input_schema: {
+            type: 'object',
+            properties: {
+              location: {
+                type: 'string',
+                description: 'The city and state, e.g. San Francisco, CA'
+              },
+              unit: {
+                type: 'string',
+                enum: ['celsius', 'fahrenheit'],
+                description: 'The unit of temperature'
+              }
+            },
+            required: ['location']
+          }
+        }
+      ],
+      messages: [
+        { role: 'user', content: 'What is the weather like in San Francisco?' }
+      ]
+    });
+
+    console.log('Tool use response:', JSON.stringify(response6.content, null, 2));
+    console.log('Stop reason:', response6.stop_reason);
+
   } catch (error) {
     console.error('Error:', error);
     process.exit(1);
@@ -159,8 +193,4 @@ async function main() {
 }
 
 // Run the example
-if (require.main === module) {
-  main().catch(console.error);
-}
-
-export default main;
+main().catch(console.error);

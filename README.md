@@ -19,6 +19,7 @@ For complete documentation including API reference, advanced usage, and agent de
 - **OpenAI Compatibility** - Use existing OpenAI client code with ChatJimmy
 - **Anthropic Compatibility** - Use existing Anthropic client code with ChatJimmy
 - **Google Gemini Compatibility** - Use existing Google Gemini client code with ChatJimmy
+- **Tool Calling Support** - Function/tool calling for all compatible APIs
 - **TypeScript Support** - Full type definitions for all APIs
 - **Stats Parsing** - Automatic parsing of `<|stats|>` performance metrics
 
@@ -99,6 +100,48 @@ const response = await client.messages.create({
 
 console.log(response.content[0].text);
 console.log(response.usage); // Converted from stats
+```
+
+### Tool Calling
+
+```typescript
+// OpenAI-style tool calling
+const response = await openaiClient.chat.completions.create({
+  model: 'gpt-4o',
+  messages: [{ role: 'user', content: 'What is the weather in Boston?' }],
+  tools: [{
+    type: 'function',
+    function: {
+      name: 'get_weather',
+      description: 'Get the current weather',
+      parameters: {
+        type: 'object',
+        properties: {
+          location: { type: 'string' }
+        },
+        required: ['location']
+      }
+    }
+  }]
+});
+
+// Anthropic-style tool calling
+const response = await anthropicClient.messages.create({
+  model: 'claude-sonnet-4-5-20250929',
+  max_tokens: 500,
+  tools: [{
+    name: 'get_weather',
+    description: 'Get the current weather',
+    input_schema: {
+      type: 'object',
+      properties: {
+        location: { type: 'string' }
+      },
+      required: ['location']
+    }
+  }],
+  messages: [{ role: 'user', content: 'What is the weather in Boston?' }]
+});
 ```
 
 ## API Reference
@@ -186,9 +229,9 @@ npm test
 # Run examples
 npm run examples
 
-npx ts-node examples/openai-compatible.ts
+node examples/openai-compatible.ts
 
-npx ts-node examples/anthropic-compatible.ts
+node examples/anthropic-compatible.ts
 
 # Lint code
 npm run lint

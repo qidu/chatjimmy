@@ -2,7 +2,7 @@
  * Example: OpenAI-compatible client usage
  */
 
-import { OpenAICompatibleClient } from '../src';
+import { OpenAICompatibleClient } from '../dist/index.js';
 
 async function main() {
   // Initialize client with your API key
@@ -85,7 +85,7 @@ async function main() {
 
     // Example 5: Using the native ChatJimmy client directly
     console.log('\n=== Example 5: Native ChatJimmy Client ===');
-    const { ChatJimmyClient } = await import('../src');
+    const { ChatJimmyClient } = await import('../dist/index.js');
     const nativeClient = new ChatJimmyClient({
       apiKey: 'your-api-key-here'
     });
@@ -105,6 +105,42 @@ async function main() {
     console.log('Native response:', nativeResponse.content);
     console.log('Stats:', nativeResponse.stats);
 
+    // Example 5: Tool calling
+    console.log('\n=== Example 5: Tool Calling ===');
+    const toolResponse = await client.chat.completions.create({
+      model: 'gpt-4o',
+      messages: [
+        { role: 'user', content: 'What is the weather like in Boston?' }
+      ],
+      tools: [
+        {
+          type: 'function',
+          function: {
+            name: 'get_weather',
+            description: 'Get the current weather in a given location',
+            parameters: {
+              type: 'object',
+              properties: {
+                location: {
+                  type: 'string',
+                  description: 'The city and state, e.g. San Francisco, CA'
+                },
+                unit: {
+                  type: 'string',
+                  enum: ['celsius', 'fahrenheit']
+                }
+              },
+              required: ['location']
+            }
+          }
+        }
+      ],
+      tool_choice: 'auto'
+    });
+
+    console.log('Tool calls:', JSON.stringify(toolResponse.choices[0].message.tool_calls, null, 2));
+    console.log('Finish reason:', toolResponse.choices[0].finish_reason);
+
   } catch (error) {
     console.error('Error:', error);
     process.exit(1);
@@ -112,8 +148,4 @@ async function main() {
 }
 
 // Run the example
-if (require.main === module) {
-  main().catch(console.error);
-}
-
-export default main;
+main().catch(console.error);
